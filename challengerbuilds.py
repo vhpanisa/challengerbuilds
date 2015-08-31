@@ -7,6 +7,8 @@ import os
 
 apikey = 'e428f726-3fbd-4831-9dcc-5bc5b278bf73'
 
+apikey2 = '8064ce2e-adfd-4655-b0f8-cba6eb0408d3'
+
 def getChamps():
   champs = {}
   r = requests.get('https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?champData=all&api_key={0}'.format(apikey))
