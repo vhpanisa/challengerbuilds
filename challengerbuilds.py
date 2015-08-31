@@ -42,7 +42,7 @@ def getPids(region):
 def getLastbuilds(pids, champ, region):
   builds = []
   for pid in pids:
-    print('Ja foram {0} de um total de {1}'.format(pids.index(pid),len(pids)))
+    print('{0} done. {1} to go'.format(pids.index(pid),len(pids)))
     go = False
     while not go:
       skip = False
@@ -69,14 +69,14 @@ def getLastbuilds(pids, champ, region):
         won = stats['winner']
         builds.append(build)
     except:
-      print('Deu merda, debug:')
-      pprint(data)
+      print('Err')
 
   return builds
 
 def makeDb(region='br'):
   pids = getPids(region)
-  for champ in [429]: #gChamps:
+  for champ in gChamps:
+    print("Doing ",  gChamps[champ])
     builds = getLastbuilds(pids, champ, region)
     fn = os.path.join(os.path.dirname(__file__), '.'.join([str(champ),'json']))
     with open(fn, 'w') as f:
@@ -107,4 +107,4 @@ def show(champ='126', region='na'):
 gItems = getItems()
 gChamps = getChamps()
 #makeDb()
-run(host='192.168.1.35', port='80')
+run(host='127.0.0.1', port='80')
