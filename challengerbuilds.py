@@ -8,6 +8,33 @@ import os
 apikey = 'e428f726-3fbd-4831-9dcc-5bc5b278bf73'
 apikey2 = '8064ce2e-adfd-4655-b0f8-cba6eb0408d3'
 
+# take an build and returns without boots enchantments
+def removeEnchant(build):
+  new_build = []
+  ninja_e = [1315, 1316, 1338, 1317, 1318, 1319] #3047 Ninja
+  ionia_e = [1330, 1341, 1331, 1332, 1333, 1334] #3158 Ionian
+  mobil_e = [1329, 1328, 1325, 1327, 1326, 1340] #3117 Mobility
+  sorce_e = [1314, 1313, 1312, 1311, 1310, 1337] #3020 Sorcerer
+  swift_e = [1307, 1306, 1309, 1308, 1305, 1336] #3009 Swiftness
+  grave_e = [1301, 1300, 1303, 1302, 1304, 1335] #3006 Greaves
+  for item in build:
+    if item in ninja_e:
+      aux = 3047
+    elif item in ionia_e:
+      aux = 3158
+    elif item in mobil_e:
+      aux = 3117
+    elif item in sorce_e:
+      aux = 3020
+    elif item in swift_e:
+      aux = 3009
+    elif item in grave_e:
+      aux = 3006
+    else:
+      aux = item
+    new_build.append(aux)
+  return new_build
+
 # This is exec on startup to fetch current champs from riot static data, doesn't count towards API req count
 # Takes nothing, returns dict in form of: dict[id]: name, e.g dict[429]: kalista
 def getChamps():
@@ -109,7 +136,7 @@ def loadBuilds(champ, region):
     for line in f.readlines():
       line = line.strip('\n')
       if not line == '':
-        builds.append([int(x) for x in line.split(',') if x != ''])
+        builds.append(removeEnchant([int(x) for x in line.split(',') if x != '']))
   return builds
 
 # default index page
