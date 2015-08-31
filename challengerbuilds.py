@@ -6,6 +6,7 @@ from time import sleep
 import os
 
 apikey = 'e428f726-3fbd-4831-9dcc-5bc5b278bf73'
+apikey2 = '8064ce2e-adfd-4655-b0f8-cba6eb0408d3'
 
 # This is exec on startup to fetch current champs from riot static data, doesn't count towards API req count
 # Takes nothing, returns dict in form of: dict[id]: name, e.g dict[429]: kalista
