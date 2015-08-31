@@ -3,9 +3,15 @@ html {
 }
 
 body{
+	background-color: #000000;
 	background-image: url("bkg/sr1.png");
 	background-size: cover;
 	display:block;
+}
+
+a:hover, a:visited, a:link, a:active
+{
+    text-decoration: none;
 }
 
 .text{
@@ -41,27 +47,42 @@ body{
 	vertical-align: right;
 }
 
-.btn{
+#btn{
 	min-height: 20px;
 	min-width: 100px;
 
-	vertical-align: center;
-	left: 50%;
+	height: 3vw;
+	width: 22vw;
+	margin-left: 30%;
 
+	vertical-align: center;
+
+	border-style: solid;
 	border-color: white;
-	border-width: 3px;
+	border-width: 0.2vw;
+
+	text-align: center;
+
+	font-size: 2vw;
+	line-height: 150%;
 }
 
-#btnTxt{
-	font-size: 2vw;
+#para2{
+	line-height: 180%;
+	margin-top 50vw;
+}
+
+#btn:hover{
+	border-color: #AAAAAA;
+	color: #AAAAAA;
 }
 
 .sep{
 	position:fixed;
 	background-color: white;
 	min-height: 5px;
-	min-width: 5px;
-	width: 5px;
+	min-width: 0.2vw;
+	width: 0.2vw;
 	height: 80%;
 
 	top:10%;
