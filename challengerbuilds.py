@@ -30,6 +30,12 @@ def removeEnchant(build):
       aux = 3009
     elif item in grave_e:
       aux = 3006
+    elif item == 3363:
+      aux = 3342
+    elif item == 3341:
+      aux = 3364
+    elif item in [3361, 3362]:
+      aux = 3340
     else:
       aux = item
     new_build.append(aux)
