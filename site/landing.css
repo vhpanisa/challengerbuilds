@@ -1,0 +1,99 @@
+html {
+	height: 100%;
+}
+
+body{
+	background-image: url("bkg/sr1.png");
+	background-size: cover;
+	display:block;
+}
+
+.text{
+	position:fixed;
+	min-height: 10vmin;
+	min-width: 10vw;
+
+	right:10vw;
+	left:10vw;
+}
+
+#text{
+	top:10%;
+	left:55%;
+	overflow: clip;
+}
+
+.buttonside{
+	position:fixed;
+	min-height: 10vmin;
+	min-width: 10vw;
+
+	text-align: right;
+
+	top: 30%;
+	right:48%;
+	left:10vw;
+}
+
+#para{
+	font-size: 1vw;
+	line-height: 110%;
+	vertical-align: right;
+}
+
+.btn{
+	min-height: 20px;
+	min-width: 100px;
+
+	vertical-align: center;
+	left: 50%;
+
+	border-color: white;
+	border-width: 3px;
+}
+
+#btnTxt{
+	font-size: 2vw;
+}
+
+.sep{
+	position:fixed;
+	background-color: white;
+	min-height: 5px;
+	min-width: 5px;
+	width: 5px;
+	height: 80%;
+
+	top:10%;
+	bottom: 10%;
+	vertical-align: center;
+	right: 46vw;
+}
+
+.txt{
+	font-family: 'Roboto', sans-serif;
+	
+	color:white;
+	line-height: 50%;
+}
+
+#header{
+	font-size: 5.5vw;
+	font-weight: 100;
+}
+
+#chal{
+	font-size: 5.5vw;
+	font-weight: 400;
+}
+
+
+#shadow{
+	background-color: #000000;
+	opacity: 0.6;
+	z-index: -1;
+
+	top:0px;
+	bottom:0px;
+}
+
