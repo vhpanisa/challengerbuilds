@@ -132,10 +132,11 @@ def show(champ='126', region='na'):
 # startup here
 # these 2 lines below must be kept
 gItems = getItems()
-gChamps = getChamps()
+print(gItems)
+#gChamps = getChamps()
 
 # chose 1 of 2 lines
 # first is fetching data mode
 # second is actually app mode
 #makeDb()
-run(host='127.0.0.1', port='80')
+#run(host='127.0.0.1', port='80')
