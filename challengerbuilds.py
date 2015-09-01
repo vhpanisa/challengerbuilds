@@ -5,8 +5,14 @@ from pprint import pprint
 from time import sleep
 import os
 
-apikey = 'e428f726-3fbd-4831-9dcc-5bc5b278bf73'
-apikey2 = '8064ce2e-adfd-4655-b0f8-cba6eb0408d3'
+api_pool = ['e428f726-3fbd-4831-9dcc-5bc5b278bf73',
+            '3376c62a-7907-40b5-acf2-ac0b2c2bbaee',
+            '91468fbe-8912-498b-85db-6134b78b2f43',
+            'b57a0cdb-9518-48a3-ab8e-39672da5a41a',
+            'ad2d0cbd-3433-46a0-8b36-0fe270e41643',
+            'd571dc1c-7cd1-4968-b6c2-40143fa86833']
+
+apikey = api_pool[5]
 
 # take an build and returns without boots enchantments
 def removeEnchant(build):
@@ -30,12 +36,6 @@ def removeEnchant(build):
       aux = 3009
     elif item in grave_e:
       aux = 3006
-    elif item == 3363:
-      aux = 3342
-    elif item == 3341:
-      aux = 3364
-    elif item in [3361, 3362]:
-      aux = 3340
     else:
       aux = item
     new_build.append(aux)
@@ -128,11 +128,13 @@ def makeDb(region='br'):
   pids = getPids(region)
   for champ in gChamps:
     print("Doing ",  gChamps[champ])
-    builds = getLastbuilds(pids, champ, region)
     fn = os.path.join(os.path.dirname(__file__), '.'.join([str(champ),'data']))
-    with open(fn, 'w') as f:
-      for build in builds:
-        f.write(','.join([str(x) for x in build]+['\n']))
+    if not os.path.isfile(fn):
+      open(fn, 'a').close()
+      builds = getLastbuilds(pids, champ, region)
+      with open(fn, 'w') as f:
+        for build in builds:
+          f.write(','.join([str(x) for x in build]+['\n']))
 
 
 # get data for a specific champion, for now region is ignored
@@ -165,11 +167,10 @@ def show(champ='126', region='na'):
 # startup here
 # these 2 lines below must be kept
 gItems = getItems()
-print(gItems)
-#gChamps = getChamps()
+gChamps = getChamps()
 
 # chose 1 of 2 lines
 # first is fetching data mode
 # second is actually app mode
-#makeDb()
+makeDb()
 #run(host='127.0.0.1', port='80')
