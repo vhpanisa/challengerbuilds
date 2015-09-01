@@ -11,7 +11,7 @@
 	<body>
 
 		<h1 class = "txt" id = "inst">
-		Select your desired champion to main and become a challenjour.
+		Please save your build on "League of Legends\Config\Champions\{championName}\Recommended\challenjourbuild.json"
 		</h1>
 
 		<select class = "txt" id = "champion">

@@ -210,7 +210,7 @@ def downloadBuild(champ):
     redirect("/main")
     return 
   build = makeFinalbuild(loadBuilds(champ, 'br'))
-  fn = os.path.join(os.path.dirname(__file__), '.'.join([str(champ),'json']))
+  fn = os.path.join(os.path.dirname(__file__), '.'.join(['challenjourbuild','json']))
   jdata = OrderedDict()
   jdata['title'] = 'Challenjour Builds'
   jdata['type'] = 'custom'
