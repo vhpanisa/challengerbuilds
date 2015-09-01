@@ -11,7 +11,7 @@
 	<body>
 		<div class = buttonside>
 			<p class = "txt animated fadeIn" id = "para">Create in-game builds based off the most successful Challenger and Master players</p>
-			<a href = "http://google.com">
+			<a href = "./main">
 				<div class = "txt animated fadeIn" id = "btn" href = "/memes">
 					Become a Challenjour
 				</div>

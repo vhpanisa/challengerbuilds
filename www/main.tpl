@@ -3,7 +3,7 @@
 	<head>
 		<link rel="stylesheet" href="champion.css">
 		<link href='https://fonts.googleapis.com/css?family=Roboto:100,400' rel='stylesheet' type='text/css'>
-		 <meta name="viewport" content="width=device-width">
+		<meta name="viewport" content="width=device-width">
 	</head>
 
 	
@@ -11,36 +11,35 @@
 	<body>
 
 		<h1 class = "txt" id = "inst">
-		Instructions here
+		Select your desired champion to main and become a challenjour.
 		</h1>
 
 		<select class = "txt" id = "champion">
-			<option value="champion">Champion</option>
-			<option value="a">a</option>
-			<option value="b">b</option>
+			<option value="0">Champion</option>
+			% for champ in champs:
+			<option value="{{champ}}">{{champs[champ]}}</option>
+			% end
 		</select>
 
 		<select class = "txt" id = "region">
-			<option value="region">Region</option>
-			<option value="br">br</option>
-			<option value="oce">oce</option>
+			<option value="region">All Regions</option>
 		</select>
 
-		<div class = "selection">
-			<a href = "http://google.com">
-				<div class = "txt" id = "btn">
+		<div>
+			<a href = "#">
+				<div class = "txt" id = "btn" onclick="window.location.href = '/getbuild/'+ document.getElementById('champion').options[document.getElementById('champion').selectedIndex].value">
 					Get Build
 				</div>
 			</a>
 		</div>
 
-		<a href = "http://google.com">
+		<a href = "#">
 			<div class = "nav" id = "left">
 				◀
 			</div>
 		</a>
 
-		<a href = "http://google.com">
+		<a href = "#">
 			<div class = "nav" id = "right">
 				▶
 			</div>

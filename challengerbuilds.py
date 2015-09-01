@@ -1,9 +1,11 @@
 import requests
 import json
-from bottle import route, run, template, view
+from bottle import route, run, template, view, static_file, response, get, redirect
 from pprint import pprint
 from time import sleep
+from collections import OrderedDict
 import os
+import operator
 
 api_pool = ['e428f726-3fbd-4831-9dcc-5bc5b278bf73',
             '3376c62a-7907-40b5-acf2-ac0b2c2bbaee',
@@ -36,14 +38,31 @@ def removeEnchant(build):
       aux = 3009
     elif item in grave_e:
       aux = 3006
+    elif item == 3363:
+      aux = 3342
+    elif item == 3341:
+      aux = 3364
+    elif item in [3361, 3362]:
+      aux = 3340
+    elif item == 0:
+      continue
     else:
       aux = item
     new_build.append(aux)
   return new_build
 
+def getChamps():
+  champs = {}
+  files = os.listdir()
+  for file in files:
+    if file.endswith('.data'):
+      cid = file.split('.')[0]
+      champs[cid] = gChamps[cid]
+  return champs
+
 # This is exec on startup to fetch current champs from riot static data, doesn't count towards API req count
 # Takes nothing, returns dict in form of: dict[id]: name, e.g dict[429]: kalista
-def getChamps():
+def getAllChamps():
   champs = {}
   r = requests.get('https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?champData=all&api_key={0}'.format(apikey))
   data = json.loads(r.text)
@@ -147,30 +166,94 @@ def loadBuilds(champ, region):
         builds.append(removeEnchant([int(x) for x in line.split(',') if x != '']))
   return builds
 
-# default index page
+def makeFinalbuild(builds):
+  bootlist = [3047, 3158, 3117, 3020, 3009, 3006]
+  boots = {3047:0, 3158:0, 3117:0, 3020:0, 3009:0, 3006:0}
+  trinketlist = [3342, 3364, 3340]
+  trinket = {3342:0, 3364:0, 3340:0}
+  others = {}
+  for build in builds:
+    for item in build:
+      if item in bootlist:
+        boots[item] += 1
+      elif item in trinketlist:
+        trinket[item] += 1
+      else:
+        if item in others:
+          others[item] += 1
+        else:
+          others[item] = 1
+  final = []
+  final.append(max(trinket, key=trinket.get))
+  final.append(max(boots, key=boots.get))
+  for i in range(5):
+    final.append(max(others, key=others.get))
+    del others[final[-1]]
+  return final
+
 @route('/')
-@view('index')  # this is index.tpl call
+@view('www/landing')  # this is index.tpl call
 def index():
-  return dict(champs=gChamps)  # and this is what data is given to tpl file
+  return  # and this is what data is given to tpl file]
 
+# default index page
+@route('/main')
+@view('www/main')  # this is index.tpl call
+def index():
+  return dict(champs=lChamps)  # and this is what data is given to tpl file
 
-#same as above, but with changeable arguments for specific champ on a region
+# same as above, but with changeable arguments for specific champ on a region
 # almost sure its broken for any other args other than default, will fix
-@route('/show/<champ>/<region>')
-@view('champ')
-def show(champ='126', region='na'):
-  pids = getPids(region)
-  builds = loadBuilds(champ, region)
-  return dict(builds=builds, items=gItems, champ=gChamps[champ])
+@route('/getbuild/:champ', method='GET')
+def downloadBuild(champ):
+  if int(champ) == 0:
+    redirect("/main")
+    return 
+  build = makeFinalbuild(loadBuilds(champ, 'br'))
+  fn = os.path.join(os.path.dirname(__file__), '.'.join([str(champ),'json']))
+  jdata = OrderedDict()
+  jdata['title'] = 'Challenjour Builds'
+  jdata['type'] = 'custom'
+  jdata['map'] = 'any'
+  jdata['mode'] = 'any'
+  jdata['priority'] = False
+  jdata['sortrank'] = 0
+  itemdata = []
+  for item in build:
+    itemdata.append({'id': item, 'count': 1})
+  data = {'type': 'BEST BUILD BR',
+          'recMath': False,
+          'minSummonerLevel': -1,
+          'maxSummonerLevel': -1,
+          'showIfSummonerSpell': "",
+          'hideIfSummonerSpell': "",
+          'items': itemdata,
+          }
+  block = [data]
+  jdata['blocks'] = block
+  
+  dump = json.dumps(jdata, ensure_ascii=False)
+  with open(fn, 'w') as f:
+    f.write(dump)
+  return static_file(fn, root='./', download=fn)
+
+@route('/<style>')
+def stylesheets(style):
+    return static_file(style, root='./www/')
+
+@route('/bkg/<img>')
+def background(img):
+    return static_file(img, root='./www/bkg')
 
 
 # startup here
 # these 2 lines below must be kept
 gItems = getItems()
-gChamps = getChamps()
+gChamps = getAllChamps()
+lChamps = getChamps()
 
 # chose 1 of 2 lines
 # first is fetching data mode
 # second is actually app mode
-makeDb()
-#run(host='127.0.0.1', port='80')
+#makeDb()
+run(host='192.168.0.12', port='8080')

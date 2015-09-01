@@ -36,6 +36,7 @@ a:hover, a:visited, a:link, a:active
 	min-height: 5px;
 	min-width: 0.2vw;
 	width: 70vw;
+	z-index: 1;
 
 	top:40%;
 	bottom: 40%;
